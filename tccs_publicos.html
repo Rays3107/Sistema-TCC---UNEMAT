@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block title %}TCCs Públicos{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>📚 TCCs Disponíveis para Download</h1>
+    
+    <div class="tcc-list">
+        {% for tcc in tccs %}
+        <div class="tcc-item">
+            <div class="tcc-info">
+                <h3>{{ tcc.titulo }}</h3>
+                <p>
+                    <strong>Autor:</strong> {{ tcc.user.nome if tcc.user else 'Autor não informado' }}
+                    <br>
+                    <strong>Curso:</strong> {{ tcc.user.curso_rel.nome if tcc.user and tcc.user.curso_rel else 'Curso não informado' }}
+                </p>
+            </div>
+            
+            <div class="tcc-actions">
+                <a href="{{ url_for('download_publico', tcc_id=tcc.id) }}" 
+                   class="btn btn-small">
+                    📥 Baixar PDF
+                </a>
+            </div>
+        </div>
+        {% else %}
+        <div style="text-align: center; padding: 40px;">
+            <p>📭 Nenhum trabalho disponível publicamente no momento.</p>
+            <a href="{{ url_for('login') }}" class="btn">🔑 Faça login para enviar seu trabalho</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+.tcc-list {
+    margin-top: 20px;
+}
+
+.tcc-item {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-left: 4px solid #3b82f6;
+}
+
+.tcc-info h3 {
+    margin: 0 0 10px 0;
+    color: #1f2937;
+}
+
+.tcc-info p {
+    margin: 5px 0;
+    color: #4b5563;
+}
+
+.tcc-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-small {
+    padding: 8px 16px;
+    font-size: 14px;
+}
+</style>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Início - Sistema TCC{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <h1>Bem-vindo ao Sistema de TCC</h1>
+    <p>Gerencie e compartilhe seus Trabalhos de Conclusão de Curso de forma eficiente e organizada</p>
+    
+    <div style="margin-top: 30px;">
+        {% if session.get('user_id') %}
+            <a href="{{ url_for('dashboard') }}" class="btn" style="background: white; color: #667eea; margin: 0 10px;">
+                Ir para Dashboard
+            </a>
+        {% else %}
+            <a href="{{ url_for('login') }}" class="btn" style="background: white; color: #667eea; margin: 0 10px;">
+                Acessar Sistema
+            </a>
+            <a href="{{ url_for('register') }}" class="btn" style="background: transparent; border: 2px solid white; margin: 0 10px;">
+                Criar Conta
+            </a>
+        {% endif %}
+    </div>
+</section>
+
+<section class="features">
+    <div class="feature-card">
+        <div class="feature-icon">📁</div>
+        <h3>Armazenamento Seguro</h3>
+        <p>Guarde seus TCCs com segurança e acesse de qualquer lugar</p>
+    </div>
+    
+    <div class="feature-card">
+        <div class="feature-icon">🔍</div>
+        <h3>Busca Inteligente</h3>
+        <p>Encontre trabalhos por título, autor ou palavras-chave</p>
+    </div>
+    
+    <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>Dashboard Completo</h3>
+        <p>Acompanhe seu progresso com métricas e estatísticas</p>
+    </div>
+    
+    <div class="feature-card">
+        <div class="feature-icon">👥</div>
+        <h3>Compartilhamento</h3>
+        <p>Compartilhe seus trabalhos de forma pública ou privada</p>
+    </div>
+</section>
+
+<div class="card" style="text-align: center;">
+    <h2>Comece Agora Mesmo</h2>
+    <p style="margin: 20px 0;">Junte-se a diversos estudantes que já usam nosso sistema</p>
+    
+    <div style="display: flex; justify-content: center; gap: 20px; margin-top: 30px;">
+        <a href="{{ url_for('tccs_publicos') }}" class="btn btn-secondary">
+            📚 Ver TCCs Públicos
+        </a>
+        
+        {% if not session.get('user_id') %}
+            <a href="{{ url_for('register') }}" class="btn btn-success">
+                🚀 Criar Conta Gratuita
+            </a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

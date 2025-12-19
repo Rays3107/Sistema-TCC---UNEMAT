@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Sistema de TCC - UNEMAT{% endblock %}</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
+    
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <!-- NAVBAR -->
+    <header>
+        <div class="nav-container">
+            <a href="{{ url_for('index') }}" class="brand">
+                <span>📚</span>
+                Sistema TCC
+            </a>
+            
+            <nav class="nav-links">
+                <a href="{{ url_for('index') }}">🏠 Início</a>
+                <a href="{{ url_for('tccs_publicos') }}">📄 TCCs Públicos</a>
+                
+                {% if session.get('user_id') %}
+                    <a href="{{ url_for('dashboard') }}">📊 Dashboard</a>
+                    <a href="{{ url_for('upload') }}">⬆️ Enviar TCC</a>
+                    <a href="{{ url_for('logout') }}">🚪 Sair</a>
+                {% else %}
+                    <a href="{{ url_for('register') }}">📝 Cadastro</a>
+                    <a href="{{ url_for('login') }}">🔑 Login</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="container">
+        <!-- Mensagens Flash -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flashes">
+                    {% for category, message in messages %}
+                        <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        <!-- Bloco de conteúdo das páginas filhas -->
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <p>Sistema de Gerenciamento de Trabalhos de Conclusão de Curso</p>
+            <p>UNEMAT - Universidade do Estado de Mato Grosso &copy; 2024</p>
+            <p style="margin-top: 15px; font-size: 0.9em; color: #6b7280;">
+                Desenvolvido para a disciplina de Projeto Integrador - POO
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scripts JavaScript -->
+    {% block scripts %}{% endblock %}
+</body>
+</html>

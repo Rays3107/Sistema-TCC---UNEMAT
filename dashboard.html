@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="card">
+    <h2>Olá, {{ current_user.nome }}</h2>
+
+    <p>
+        <strong>Curso:</strong> {{ current_user.curso }} |
+        <strong>CPF:</strong> {{ current_user.cpf }}
+    </p>
+
+    <div class="painel-acoes">
+        <a href="{{ url_for('upload') }}" class="btn">Enviar novo TCC</a>
+    </div>
+</div>
+
+<div class="card">
+    <h3>Meus TCCs</h3>
+
+    <ul class="lista-tcc">
+        {% for t in tccs %}
+            <li>
+                <div>
+                    <strong>{{ t.titulo }}</strong>
+                </div>
+
+                <div>
+                    <a class="btn" href="{{ url_for('download', tcc_id=t.id) }}">
+                        Baixar
+                    </a>
+                </div>
+            </li>
+        {% else %}
+            <li>Nenhum TCC enviado ainda.</li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}
